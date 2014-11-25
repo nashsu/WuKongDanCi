@@ -8,7 +8,7 @@ class ReciteTasksController < ApplicationController
   def index
     @recite_tasks = User.first.recite_tasks
 
-    @today_recite_tasks = ReciteTask.where(:user_id => 1, :next_time => Date.today...Date.tomorrow)
+    @today_recite_tasks = ReciteTask.where(:user_id => @current_user.id, :next_time => Date.today...Date.tomorrow)
 
   end
 
@@ -81,7 +81,7 @@ class ReciteTasksController < ApplicationController
         word_id = result.split(":")[0].to_i
 
         #更新易错词记录
-        recite_word = ReciteWord.where(:word_id => word_id, :user_id => 1, :recite_task_id => @recite_task.id).last
+        recite_word = ReciteWord.where(:word_id => word_id, :user_id => @current_user.id, :recite_task_id => @recite_task.id).last
 
         #针对错题创建易错词记录
         if result.split(":")[1].to_i == 0
@@ -94,7 +94,7 @@ class ReciteTasksController < ApplicationController
             recite_word.save
           else
             ReciteWord.create(
-              :user_id => 1,
+              :user_id => @current_user.id,
               :word_id => word_id,
               :recite_task_id => @recite_task.id,
               :score => 70
@@ -177,7 +177,7 @@ class ReciteTasksController < ApplicationController
   def create
     @recite_task = ReciteTask.new
 
-    @recite_task.user_id = 1
+    @recite_task.user_id = @current_user.id
 
     @recite_task.task_type = params[:task_type].to_i
 
