@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  recite_task_id: 
+  word_id: 
+  user_id: 
+  score: 1
+  dict_id: 
+
+two:
+  recite_task_id: 
+  word_id: 
+  user_id: 
+  score: 1
+  dict_id: 

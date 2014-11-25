@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task_type: 1
+  word_ids: MyText
+  user_id: 
+  start_time: 2014-11-24 17:21:44
+  next_time: 2014-11-24 17:21:44
+
+two:
+  task_type: 1
+  word_ids: MyText
+  user_id: 
+  start_time: 2014-11-24 17:21:44
+  next_time: 2014-11-24 17:21:44

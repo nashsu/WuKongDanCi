@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>易错词列表</h1>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>单词</th>
+      <th>含义</th>
+      <th>易错值</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @recite_task.recite_words.each do |recite_word| %>
+    <% word = recite_word.word %>
+      <tr>
+        <td><%= word.content %></td>
+        <td><%= word.mean %></td>
+        <td><span  style="background-color: <%= get_score_color(recite_word.score) %>;padding:8px;border-radius:6px;color:white;"><%= 100 - recite_word.score %> %</span></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<%= link_to '返回', recite_tasks_path, :class => "btn btn-default" %>

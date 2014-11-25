@@ -1,0 +1,40 @@
+<%= form_for @word, :html => {:role => "form"}  do |f| %>
+  <% if @word.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@word.errors.count, "error") %> prohibited this word from being saved:</h2>
+
+      <ul>
+      <% @word.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <input type="hidden" name="word[chapter_id]" value="<%= @chapter.id %>">
+
+  <div class="form-group">
+    <label>所属词典、章节</label><br>
+    <p class="btn btn-danger"><%= @chapter.dict.name + " - " + @chapter.name  %></p>
+  </div>
+
+  <div class="form-group">
+    <label>单词</label><br>
+    <%= f.text_field :content, :class => "form-control"  %>
+  </div>
+  <div class="form-group">
+    <label>含义</label><br>
+    <%= f.text_field :mean, :class => "form-control"  %>
+  </div>
+  <div class="form-group">
+    <label>词性</label><br>
+    <%= f.text_field :w_type , :class => "form-control" %>
+  </div>
+  <div class="form-group">
+    <label>音标</label><br>
+    <%= f.text_field :phonetic, :class => "form-control"  %>
+  </div>
+  <div class="actions">
+    <%= f.submit '提交', :class => "btn btn-success" %>
+  </div>
+<% end %>

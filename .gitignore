@@ -1,0 +1,6 @@
+log/*
+Gemfile.lock
+tmp/*
+/db/*.sqlite3
+/public/uploads
+/public/assets

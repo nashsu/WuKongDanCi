@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyString
+  mean: MyString
+  w_type: MyString
+  phonetic: MyString
+
+two:
+  content: MyString
+  mean: MyString
+  w_type: MyString
+  phonetic: MyString

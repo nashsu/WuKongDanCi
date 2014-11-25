@@ -1,0 +1,59 @@
+<h1>今日任务</h1>
+
+
+<% if !@today_recite_tasks.blank? %>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>单词数量</th>
+        <th>易错词数量</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @today_recite_tasks.each do |recite_task| %>
+        <tr>
+          <td><%= recite_task.word_ids.split(",").count %></td>
+          <td><%= recite_task.recite_words.count %></td>
+          <td><%= link_to recite_task.tmp_record ? '继续' : '开始', { :controller => "recite_tasks", :action => "go", :id => recite_task.id } %></td>
+          <td><%= link_to '查看易错词', recite_task %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-success">今天没有任务</div>
+<% end %>
+
+<hr>
+
+<h1>全部任务</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>单词数量</th>
+      <th>易错词数量</th>
+      <th>下次复习时间</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @recite_tasks.each do |recite_task| %>
+      <tr>
+        <td><%= recite_task.word_ids.split(",").count %></td>
+        <td><%= recite_task.recite_words.count %></td>
+        <td><%= get_day_count(recite_task.next_time).to_s + " 天后" if  recite_task.next_time %></td>
+        <td><%= link_to recite_task.tmp_record ? '继续' : '开始', { :controller => "recite_tasks", :action => "go", :id => recite_task.id } %></td>
+        <td><%= link_to '查看易错词', recite_task %></td>
+        <td><%= button_to '删除', recite_task, method: :delete, :class => "btn btn-default btn-xs" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

@@ -1,0 +1,134 @@
+<div class="recite_word_block"> 
+	<h1 class="tlt" id="recite_word"><%= @word.mean %></h1>
+	<h1 id="recite_word_content" style="display:none;"><%= @word.content %></h1>
+	<hr>
+
+	<input type="text" id="userinput" class="form-control" />
+
+	<hr>
+
+	<a class="btn btn-success btn-fullwidth" id="submit_btn" href="#">提交</a>
+	<a style="display:none;" class="btn btn-danger btn-fullwidth" id="next_btn" href="#">下一个</a>
+
+</div>
+
+<% content_for :javascript_includes do %>
+
+<script type="text/javascript" src="/js/jquery.textillate.js"></script>
+<script type="text/javascript" src="/js/jquery.fittext.js"></script>
+<script type="text/javascript" src="/js/jquery.lettering.js"></script>
+
+
+<script type="text/javascript">
+	var count = 1;
+  	var authenticity_token =  $('meta[name=csrf-token]').attr("content");
+	var recite_task_id = <%= @recite_task.id %>;
+	var key_next = false;
+	var word = {
+		"content": "<%= @word.content %>",
+		"mean": "<%= @word.mean %>",
+		"id": <%= @word.id %>
+	};
+	var result;
+
+	function check_input(){
+		var input_value = $("#userinput").val().toLowerCase();
+
+		if (input_value == word.content){
+			result = 1;
+
+
+			$("#next_btn").click();
+
+		}else{
+			result = 0;
+
+			if (count > 2){
+
+				$("#recite_word_content").show();
+
+				$("#submit_btn").hide();
+				$("#next_btn").show();
+
+				key_next = true;
+
+			}else{
+				count++;
+				$("#recite_word").css("color", "#e74c3c");
+				$("#recite_word").textillate({ in: { effect: 'shake' , sync: true }, autoStart: true });
+				$("#recite_word").textillate('in');
+			}
+
+		};
+
+		$("#userinput").focus();
+
+	}
+
+	function next_word(){
+
+		$.post("/recite_tasks/" + recite_task_id +  "/next_word", {recite_task_id: <%= @recite_task.id %>, result: result, word_id: word.id, authenticity_token: authenticity_token}, function(result){
+	        if(result.code == 500){ 
+	        	alert("返回值错误，请重新开始任务");
+	        }else if (result.code == 302){
+	        	window.location = "/recite_tasks/" + recite_task_id +  "/end";
+	        }else if (result.code == 200){
+	        	word.content = result.word;
+	        	word.mean = result.mean;
+	        	word.id = result.id;
+				// $("#recite_word").css("font-size", "40");
+				// $("#recite_word").css("color", "#34495e");
+				$("#recite_word").replaceWith('<h1 class="tlt" id="recite_word"></h1>');
+	        	$("#userinput").val("");
+	        	$("#recite_word").text(word.mean);
+	       		$("#recite_word_content").hide();
+	       		$("#next_btn").hide();
+	       		$("#submit_btn").show();
+	        	$("#recite_word_content").text(word.content);
+	        	count = 1;
+
+	        }else{
+	        	alert("返回值无法识别");
+	        }
+	    });
+		$("#userinput").focus();
+		key_next = false;
+	};
+
+	$(document).ready(function(){
+
+
+		$("#userinput").focus();
+
+
+
+		$("#submit_btn").click(function(){
+			
+			check_input();
+			return false;
+		});
+
+		$("#userinput").keypress(function(e){
+			if(e.which == 13){
+				if (key_next) {
+					next_word();
+				}else{
+					check_input();
+				}
+			}
+		});
+
+		$("#next_btn").click(function(){
+			next_word();
+
+	        return false;
+
+		});
+
+
+	});
+
+</script>
+
+
+<% end %>

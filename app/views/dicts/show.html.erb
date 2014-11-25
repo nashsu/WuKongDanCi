@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @dict.name %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @dict.desc %>
+</p>
+
+
+<hr>
+
+<table class="table table-hover">
+  <%= link_to '新建章节', new_dict_chapter_path(@dict), :class => "btn btn-success pull-right" %>
+
+  <thead>
+    <tr>
+      <th>章节名称</th>
+      <th>描述</th>
+      <th>单词书</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dict.chapters.each do |chapter| %>
+      <tr>
+        <td><%= chapter.name %></td>
+        <td><%= chapter.desc %></td>
+        <td><%= chapter.words.count %></td>
+        <td><%= button_to '创建学习任务', {:controller => "recite_tasks", :action => "create", :chapter_id => chapter.id, :task_type => 1} %></td>
+        <td><%= link_to '显示', chapter %></td>
+        <td><%= link_to '编辑', edit_chapter_path(chapter) %></td>
+        <td><%= link_to '删除', chapter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<hr>
+
+
+<%= link_to '编辑', edit_dict_path(@dict) , :class => "btn btn-default" %> |
+<%= link_to '返回', dicts_path , :class => "btn btn-default" %>

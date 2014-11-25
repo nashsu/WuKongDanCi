@@ -1,0 +1,19 @@
+h1{
+	font-size: 30px;
+}
+
+#recite_word{
+	font-size: 60px;
+}
+
+.btn-fullwidth{
+	width: 100%;
+}
+
+.recite_word_block h1{
+	font-size: 40px;
+}
+
+.recite_word_block h1, input{
+	text-align: center;
+}

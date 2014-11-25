@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @word.content %>
+</p>
+
+<p>
+  <strong>Mean:</strong>
+  <%= @word.mean %>
+</p>
+
+<p>
+  <strong>W type:</strong>
+  <%= @word.w_type %>
+</p>
+
+<p>
+  <strong>Phonetic:</strong>
+  <%= @word.phonetic %>
+</p>
+
+<%= link_to 'Edit', edit_word_path(@word) %> |
+<%= link_to 'Back', words_path %>
