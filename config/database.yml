@@ -50,5 +50,5 @@ test:
 production:
   <<: *default
   database: WuKongDanCi_production
-  username: WuKongDanCi
-  password: <%= ENV['WUKONGDANCI_DATABASE_PASSWORD'] %>
+  username: root
+  password: redhatqweasd
